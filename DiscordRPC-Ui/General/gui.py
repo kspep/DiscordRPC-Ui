@@ -57,7 +57,7 @@ def main(page: ft.Page):
     #Start main.py
     run_button = ft.ElevatedButton(
         text="Run Main Script",
-        style=ft.ButtonStyle(bgcolor=ft.Colors.RED),
+        style=ft.ButtonStyle(bgcolor=ft.Colors.BLUE), #RED
         on_click=lambda e: run_main_script()
     )
 
