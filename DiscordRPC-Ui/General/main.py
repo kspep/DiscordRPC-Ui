@@ -6,7 +6,7 @@ BASE_DIR = 'files'
 client_id = None
 url = None
 state = None
-details= None
+details = None
 start = None
 end = None
 party_size = None
@@ -29,9 +29,9 @@ def read_from_fields():
             end = int(f.read())
     except:pass
     try:
-        with open(f"{BASE_DIR}/DataPaty_size", "r") as f:
+        with open(f"{BASE_DIR}/DataParty_size", "r") as f:
             party_size = int(f.read())
-        with open(f"{BASE_DIR}/DataPaty_sizeMax", "r") as f:
+        with open(f"{BASE_DIR}/DataParty_sizeMax", "r") as f:
             party_size_max = int(f.read())
     except:pass
     with open(f"{BASE_DIR}/ButText", "r") as f:
@@ -57,9 +57,14 @@ def main_function():
 
     
     while True:
-        button = ([{"label": f"{but_text}", "url": f"{but_link}"}] if but_text != '' else None)
+        buttons_pack = ([{"label": f"{but_text}", "url": f"{but_link}"}] if but_text != '' else None)
         party_size_pack = ([party_size, party_size_max] if party_size_max != None else None)
-        RPC.update(details=f"{details}", state=f"{state}", buttons=button, party_size=party_size_pack, start=(None if start == None else start), end=(None if end == None else end))
+        state_pack = (state if state!='' else '  ')
+        details_pack = (details if details!='' else '  ')
+        RPC.update(details=f"{details_pack}",
+                   state=f"{state_pack}",
+                   buttons=buttons_pack,
+                   party_size=party_size_pack,
+                   start=(None if start == None else start),
+                   end=(None if end == None else end))
         time.sleep(5)
-
-    
