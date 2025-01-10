@@ -60,7 +60,7 @@ def main(page: ft.Page):
     )
 
     #Text info
-    info_text = ft.Text("Создано A и B", color=ft.Colors.ON_SURFACE_VARIANT)
+    info_text = ft.Text("Creators Limnetic and Kspep", color=ft.Colors.ON_SURFACE_VARIANT)
 
     #Block structure
     page.add(
