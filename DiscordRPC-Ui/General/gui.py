@@ -19,6 +19,8 @@ initialize_files()
 def main(page: ft.Page):
     page.title = "Flet GUI Project"
     page.theme_mode = ft.ThemeMode.DARK
+    page.window_width = 650 #redact size
+    page.window_height = 450
 
     #Button and fild of enter
     url_input = ft.TextField(label="URL Client ID", width=300)
