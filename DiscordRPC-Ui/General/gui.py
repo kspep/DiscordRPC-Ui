@@ -8,7 +8,7 @@ def initialize_files():
     os.makedirs(f"{BASE_DIR}/List", exist_ok=True)
     for file_name in [
         "BotID", "DataState", "DataDetails", "DataStart",
-        "DataEnd", "DataPaty_size", "DataPaty_sizeMax", "ButText", "ButLink"
+        "DataEnd", "DataParty_size", "DataParty_sizeMax", "ButText", "ButLink" #"DataEnd", "DataPaty_size", "DataPaty_sizeMax", "ButText", "ButLink"
     ]:
         with open(f"{BASE_DIR}/{file_name}", "w") as f:
             f.write("")
@@ -110,9 +110,9 @@ def save_state(state, details, start, end, party_size, party_size_max, but_text,
         f.write(start)
     with open(f"{BASE_DIR}/DataEnd", "w") as f:
         f.write(end)
-    with open(f"{BASE_DIR}/DataPaty_size", "w") as f:
+    with open(f"{BASE_DIR}/DataParty_size", "w") as f: #with open(f"{BASE_DIR}/DataPaty_size", "w") as f:
         f.write(party_size)
-    with open(f"{BASE_DIR}/DataPaty_sizeMax", "w") as f:
+    with open(f"{BASE_DIR}/DataParty_sizeMax", "w") as f: #with open(f"{BASE_DIR}/DataPaty_sizeMax", "w") as f:
         f.write(party_size_max)
     with open(f"{BASE_DIR}/ButText", "w") as f:
         f.write(but_text)
