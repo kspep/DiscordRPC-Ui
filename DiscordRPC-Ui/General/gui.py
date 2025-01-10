@@ -1,14 +1,15 @@
 import flet as ft
-import os
+import os, time
+from main import main_function
 
 #Create file
 BASE_DIR = "files"
-
+print(time.time())
 def initialize_files():
     os.makedirs(f"{BASE_DIR}/List", exist_ok=True)
     for file_name in [
         "BotID", "DataState", "DataDetails", "DataStart",
-        "DataEnd", "DataParty_size", "DataParty_sizeMax", "ButText", "ButLink" #"DataEnd", "DataPaty_size", "DataPaty_sizeMax", "ButText", "ButLink"
+        "DataEnd", "DataParty_size", "DataParty_sizeMax", "ButText", "ButLink"
     ]:
         with open(f"{BASE_DIR}/{file_name}", "w") as f:
             f.write("")
@@ -19,16 +20,14 @@ initialize_files()
 def main(page: ft.Page):
     page.title = "Flet GUI Project"
     page.theme_mode = ft.ThemeMode.DARK
-    page.window_width = 650 #redact size
-    page.window_height = 450
+    page.window.width = 650
+    page.window.height = 500
 
     #Button and fild of enter
-    url_input = ft.TextField(label="URL Client ID", width=300)
-    save_url_button = ft.ElevatedButton(
-        text="Save URL",
-        on_click=lambda e: save_url(url_input.value)
-    )
 
+
+    
+    url_input = ft.TextField(label="URL Client ID", width=300)
     state_input = ft.TextField(label="State (str)", width=300)
     details_input = ft.TextField(label="Details (str)", width=300)
     start_input = ft.TextField(label="Start Time (int)", width=150, keyboard_type=ft.KeyboardType.NUMBER)
@@ -43,6 +42,7 @@ def main(page: ft.Page):
     save_state_button = ft.ElevatedButton(
         text="Save State",
         on_click=lambda e: save_state(
+            url=url_input.value,
             state=state_input.value,
             details=details_input.value,
             start=start_input.value,
@@ -57,18 +57,18 @@ def main(page: ft.Page):
     #Start main.py
     run_button = ft.ElevatedButton(
         text="Run Main Script",
-        style=ft.ButtonStyle(bgcolor=ft.Colors.BLUE), #RED
+        style=ft.ButtonStyle(bgcolor=ft.Colors.BLUE),
         on_click=lambda e: run_main_script()
     )
 
     #Text info
-    info_text = ft.Text("Creators Limnetic and Kspep", color=ft.Colors.ON_SURFACE_VARIANT)
+    info_text = ft.Text("Создано Limnetic и Kspep", color=ft.Colors.ON_SURFACE_VARIANT)
 
     #Block structure
     page.add(
         ft.Column([
             ft.Container(
-                content=ft.Row([url_input, save_url_button], alignment=ft.MainAxisAlignment.SPACE_BETWEEN),
+                content=ft.Row([url_input], alignment=ft.MainAxisAlignment.SPACE_BETWEEN),
                 padding=10,
                 bgcolor=ft.Colors.SECONDARY_CONTAINER,
                 border_radius=5
@@ -103,7 +103,9 @@ def save_url(url):
         log.write(url + "\n")
 
 
-def save_state(state, details, start, end, party_size, party_size_max, but_text, but_link):
+def save_state(url, state, details, start, end, party_size, party_size_max, but_text, but_link):
+    with open(f"{BASE_DIR}/BotID", "w") as f:
+        f.write(url)
     with open(f"{BASE_DIR}/DataState", "w") as f:
         f.write(state)
     with open(f"{BASE_DIR}/DataDetails", "w") as f:
@@ -112,9 +114,9 @@ def save_state(state, details, start, end, party_size, party_size_max, but_text,
         f.write(start)
     with open(f"{BASE_DIR}/DataEnd", "w") as f:
         f.write(end)
-    with open(f"{BASE_DIR}/DataParty_size", "w") as f: #with open(f"{BASE_DIR}/DataPaty_size", "w") as f:
+    with open(f"{BASE_DIR}/DataParty_size", "w") as f:
         f.write(party_size)
-    with open(f"{BASE_DIR}/DataParty_sizeMax", "w") as f: #with open(f"{BASE_DIR}/DataPaty_sizeMax", "w") as f:
+    with open(f"{BASE_DIR}/DataParty_sizeMax", "w") as f:
         f.write(party_size_max)
     with open(f"{BASE_DIR}/ButText", "w") as f:
         f.write(but_text)
@@ -123,7 +125,7 @@ def save_state(state, details, start, end, party_size, party_size_max, but_text,
 
 
 def run_main_script():
-    os.system("Code/main.py")
+    main_function()
 
 #Start main.py
 if __name__ == "__main__":
