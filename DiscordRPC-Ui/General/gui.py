@@ -11,7 +11,7 @@ def initialize_files():
     os.makedirs(f"{BASE_DIR}/List", exist_ok=True)
     for file_name in [
         "BotID", "DataState", "DataDetails", "DataStart",
-        "DataEnd", "DataParty_size", "DataParty_sizeMax", "ButText", "ButLink"
+        "DataEnd", "DataParty_size", "DataParty_sizeMax", "ButText", "ButLink", "ButText2", "ButLink2"
     ]:
         with open(f"{BASE_DIR}/{file_name}", "w") as f:
             f.write("")
@@ -26,7 +26,8 @@ def main(page: ft.Page):
     page.window.height = 500
 
     # Input fields
-    url_input = ft.TextField(label="URL Client ID", width=300)
+    
+    url_input = ft.TextField(label="URL Client ID (REQUIRED ENTRY)", width=300, border_color=ft.colors.RED_500) #warn sub 2 (c)
     state_input = ft.TextField(label="State (str)", width=300)
     details_input = ft.TextField(label="Details (str)", width=300)
     start_input = ft.TextField(label="Start Time (int)", width=150, keyboard_type=ft.KeyboardType.NUMBER)
@@ -35,6 +36,8 @@ def main(page: ft.Page):
     party_size_max_input = ft.TextField(label="Party Size Max (int)", width=150, keyboard_type=ft.KeyboardType.NUMBER)
     but_text_input = ft.TextField(label="Button Text", width=300)
     but_link_input = ft.TextField(label="Button Link", width=300)
+    but_text_input2 = ft.TextField(label="Button Text", width=300)
+    but_link_input2 = ft.TextField(label="Button Link", width=300)
 
     # Save state button
     save_state_button = ft.ElevatedButton(
@@ -49,6 +52,8 @@ def main(page: ft.Page):
             party_size_max=party_size_max_input.value,
             but_text=but_text_input.value,
             but_link=but_link_input.value,
+            but_text2=but_text_input2.value,
+            but_link2=but_link_input2.value,
             page=page  # Pass the page object
         )
     )
@@ -78,6 +83,7 @@ def main(page: ft.Page):
                     ft.Row([start_input, end_input], alignment=ft.MainAxisAlignment.SPACE_BETWEEN),
                     ft.Row([party_size_input, party_size_max_input], alignment=ft.MainAxisAlignment.SPACE_BETWEEN),
                     ft.Row([but_text_input, but_link_input], alignment=ft.MainAxisAlignment.SPACE_BETWEEN),
+                    ft.Row([but_text_input2, but_link_input2], alignment=ft.MainAxisAlignment.SPACE_BETWEEN),
                     save_state_button
                 ]),
                 padding=10,
@@ -94,7 +100,7 @@ def main(page: ft.Page):
     )
 
 # Save state function
-def save_state(url, state, details, start, end, party_size, party_size_max, but_text, but_link, page):
+def save_state(url, state, details, start, end, party_size, party_size_max, but_text, but_link, but_text2, but_link2, page):
     with open(f"{BASE_DIR}/BotID", "w") as f:
         f.write(url)
     with open(f"{BASE_DIR}/DataState", "w") as f:
@@ -112,6 +118,10 @@ def save_state(url, state, details, start, end, party_size, party_size_max, but_
     with open(f"{BASE_DIR}/ButText", "w") as f:
         f.write(but_text)
     with open(f"{BASE_DIR}/ButLink", "w") as f:
+        f.write(but_link)
+    with open(f"{BASE_DIR}/ButText2", "w") as f:
+        f.write(but_text)
+    with open(f"{BASE_DIR}/ButLink2", "w") as f:
         f.write(but_link)
 
     # Show SnackBar
