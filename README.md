@@ -16,11 +16,39 @@ RU:
 позволяет добавить фото (анимацию с частотой обновления 5 сек) статус и детали статуса, количество участников в несуществующем парти, время игры, кнопки с ссылками и т. д.
 пока что проект в разработке но в скором будут добавлены новые функции а GUI станет ещё лучше 
 
----------
-
-Вот исправленный текст с учетом грамматических ошибок:
+EN:
 
 ---
+
+# Software and OS Information:  
+**DiscordRPC-Ui** was tested on Windows 11, Windows 10, and Arch Linux.  
+- **Windows 11**: Works as expected.  
+- **Windows 10**: Works as expected.  
+- **Arch Linux**: Extremely slow installation with uncertain results. Conclusion: strongly not recommended.
+
+**We are trying to adapt DRPC-UI to all operating systems, but due to the libraries used, it is quite difficult on some OS. In the near future, we will be testing other operating systems like Ubuntu, Fedora, and other UNIX-like systems, within our capabilities.**
+
+---
+
+# Installation Instructions:  
+**Windows 10/11**:  
+1. Install Python 3.12 and pip from the official repositories or Microsoft Store.  
+2. Then, install either the ZIP archive (recommended) or use Git (third-party GitHub software).  
+
+3. Extract the archive (if using the archive) and go to the **DiscordRPC-Ui** folder in the same **DiscordRPC-Ui** folder.  
+4. Then, go to the **general** folder and open the terminal in this folder.  
+
+5. Enter the command:  
+   ```pip install flet pypresence```  
+6. After that, run **gui.py** using:  
+   ```python gui.py``` or ```python3 gui.py```.  
+
+7. The GUI will open.
+
+---
+
+
+RU:
 
 # Информация по ПО и ОС:  
 **DiscordRPC-Ui** был протестирован на Windows 11, Windows 10 и Arch Linux.  
