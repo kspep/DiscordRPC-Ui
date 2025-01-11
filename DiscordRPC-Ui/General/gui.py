@@ -26,7 +26,7 @@ def main(page: ft.Page):
     page.window.height = 500
 
     # Input fields
-    url_input = ft.TextField(label="URL Client ID (REQUIRED FIELD)", width=300)
+    url_input = ft.TextField(label="URL Client ID", width=300)
     state_input = ft.TextField(label="State (str)", width=300)
     details_input = ft.TextField(label="Details (str)", width=300)
     start_input = ft.TextField(label="Start Time (int)", width=150, keyboard_type=ft.KeyboardType.NUMBER)
@@ -61,7 +61,7 @@ def main(page: ft.Page):
     )
 
     # Information text
-    info_text = ft.Text("Created by Limnetic and Kspep", color=ft.Colors.ON_SURFACE_VARIANT)
+    info_text = ft.Text("Creator's Limnetic and Kspep", color=ft.Colors.ON_SURFACE_VARIANT)
 
     # Structure blocks
     page.add(
@@ -120,7 +120,7 @@ def save_state(url, state, details, start, end, party_size, party_size_max, but_
     snack.open = True
     page.update()
 
-# Run main script function
+# Run main script function:
 def run_main_script():
     main_function()
 
