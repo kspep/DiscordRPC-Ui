@@ -1,10 +1,12 @@
 import flet as ft
-import os, time
+import os
+import time
 from main import main_function
 
-#Create file
+# Creating files
 BASE_DIR = "files"
 print(time.time())
+
 def initialize_files():
     os.makedirs(f"{BASE_DIR}/List", exist_ok=True)
     for file_name in [
@@ -16,29 +18,25 @@ def initialize_files():
 
 initialize_files()
 
-#General GUI
+# General GUI
 def main(page: ft.Page):
     page.title = "Flet GUI Project"
     page.theme_mode = ft.ThemeMode.DARK
     page.window.width = 650
     page.window.height = 500
 
-    #Button and fild of enter
-
-
-    
-    url_input = ft.TextField(label="URL Client ID", width=300)
+    # Input fields
+    url_input = ft.TextField(label="URL Client ID (REQUIRED FIELD)", width=300)
     state_input = ft.TextField(label="State (str)", width=300)
     details_input = ft.TextField(label="Details (str)", width=300)
     start_input = ft.TextField(label="Start Time (int)", width=150, keyboard_type=ft.KeyboardType.NUMBER)
     end_input = ft.TextField(label="End Time (int)", width=150, keyboard_type=ft.KeyboardType.NUMBER)
-
     party_size_input = ft.TextField(label="Party Size (int)", width=150, keyboard_type=ft.KeyboardType.NUMBER)
     party_size_max_input = ft.TextField(label="Party Size Max (int)", width=150, keyboard_type=ft.KeyboardType.NUMBER)
-
     but_text_input = ft.TextField(label="Button Text", width=300)
     but_link_input = ft.TextField(label="Button Link", width=300)
 
+    # Save state button
     save_state_button = ft.ElevatedButton(
         text="Save State",
         on_click=lambda e: save_state(
@@ -50,21 +48,22 @@ def main(page: ft.Page):
             party_size=party_size_input.value,
             party_size_max=party_size_max_input.value,
             but_text=but_text_input.value,
-            but_link=but_link_input.value
+            but_link=but_link_input.value,
+            page=page  # Pass the page object
         )
     )
 
-    #Start main.py
+    # Run main script button
     run_button = ft.ElevatedButton(
         text="Run Main Script",
         style=ft.ButtonStyle(bgcolor=ft.Colors.BLUE),
         on_click=lambda e: run_main_script()
     )
 
-    #Text info
-    info_text = ft.Text("Creator Limnetic and Kspep", color=ft.Colors.ON_SURFACE_VARIANT)
+    # Information text
+    info_text = ft.Text("Created by Limnetic and Kspep", color=ft.Colors.ON_SURFACE_VARIANT)
 
-    #Block structure
+    # Structure blocks
     page.add(
         ft.Column([
             ft.Container(
@@ -94,16 +93,8 @@ def main(page: ft.Page):
         ])
     )
 
-#Function load
-
-def save_url(url):
-    with open(f"{BASE_DIR}/BotID", "w") as f:
-        f.write(url)
-    with open(f"{BASE_DIR}/List/LogsList", "a") as log:
-        log.write(url + "\n")
-
-
-def save_state(url, state, details, start, end, party_size, party_size_max, but_text, but_link):
+# Save state function
+def save_state(url, state, details, start, end, party_size, party_size_max, but_text, but_link, page):
     with open(f"{BASE_DIR}/BotID", "w") as f:
         f.write(url)
     with open(f"{BASE_DIR}/DataState", "w") as f:
@@ -123,10 +114,16 @@ def save_state(url, state, details, start, end, party_size, party_size_max, but_
     with open(f"{BASE_DIR}/ButLink", "w") as f:
         f.write(but_link)
 
+    # Show SnackBar
+    snack = ft.SnackBar(content=ft.Text("State saved"))
+    page.overlay.append(snack)
+    snack.open = True
+    page.update()
 
+# Run main script function
 def run_main_script():
     main_function()
 
-#Start main.py
+# Run app
 if __name__ == "__main__":
     ft.app(target=main)
