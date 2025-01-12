@@ -1,20 +1,32 @@
 import flet as ft
 import os
+import json
 import time
 from main import main_function
 
 # Creating files
 BASE_DIR = "files"
+INFO_FILE = f"{BASE_DIR}/infoList.json"
 print(time.time())
 
 def initialize_files():
-    os.makedirs(f"{BASE_DIR}/List", exist_ok=True)
-    for file_name in [
-        "BotID", "DataState", "DataDetails", "DataStart",
-        "DataEnd", "DataParty_size", "DataParty_sizeMax", "ButText", "ButLink", "ButText2", "ButLink2"
-    ]:
-        with open(f"{BASE_DIR}/{file_name}", "w") as f:
-            f.write("")
+    os.makedirs(BASE_DIR, exist_ok=True)
+    if not os.path.exists(INFO_FILE):
+        data = {
+            "BotID": "",
+            "DataState": "",
+            "DataDetails": "",
+            "DataStart": "",
+            "DataEnd": "",
+            "DataParty_size": "",
+            "DataParty_sizeMax": "",
+            "ButText": "",
+            "ButLink": "",
+            "ButText2": "",
+            "ButLink2": ""
+        }
+        with open(INFO_FILE, "w") as f:
+            json.dump(data, f)
 
 initialize_files()
 
@@ -70,7 +82,7 @@ def main(page: ft.Page):
             but_link=but_link_input.value,
             but_text2=but_text_input2.value,
             but_link2=but_link_input2.value,
-            page=page  # Pass the page object
+            page=page
         )
     )
 
@@ -115,31 +127,24 @@ def main(page: ft.Page):
 
 # Save state function
 def save_state(url, state, details, start, end, party_size, party_size_max, but_text, but_link, but_text2, but_link2, page):
-    with open(f"{BASE_DIR}/BotID", "w") as f:
-        f.write(url)
-    with open(f"{BASE_DIR}/DataState", "w") as f:
-        f.write(state)
-    with open(f"{BASE_DIR}/DataDetails", "w") as f:
-        f.write(details)
-    with open(f"{BASE_DIR}/DataStart", "w") as f:
-        f.write(start)
-    with open(f"{BASE_DIR}/DataEnd", "w") as f:
-        f.write(end)
-    with open(f"{BASE_DIR}/DataParty_size", "w") as f:
-        f.write(party_size)
-    with open(f"{BASE_DIR}/DataParty_sizeMax", "w") as f:
-        f.write(party_size_max)
-    with open(f"{BASE_DIR}/ButText", "w") as f:
-        f.write(but_text)
-    with open(f"{BASE_DIR}/ButLink", "w") as f:
-        f.write(but_link)
-    with open(f"{BASE_DIR}/ButText2", "w") as f:
-        f.write(but_text2)
-    with open(f"{BASE_DIR}/ButLink2", "w") as f:
-        f.write(but_link2)
+    data = {
+        "BotID": url,
+        "DataState": state,
+        "DataDetails": details,
+        "DataStart": start,
+        "DataEnd": end,
+        "DataParty_size": party_size,
+        "DataParty_sizeMax": party_size_max,
+        "ButText": but_text,
+        "ButLink": but_link,
+        "ButText2": but_text2,
+        "ButLink2": but_link2
+    }
+    with open(INFO_FILE, "w") as f:
+        json.dump(data, f, indent=4)
 
     # Show SnackBar
-    snack = ft.SnackBar(content=ft.Text("State saved"), shape=ft.RoundedRectangleBorder(radius=0), duration=100,)
+    snack = ft.SnackBar(content=ft.Text("State saved"), shape=ft.RoundedRectangleBorder(radius=0), duration=100)
     page.overlay.append(snack)
     snack.open = True
     page.update()
