@@ -98,7 +98,7 @@ def main(page: ft.Page):
     )
 
     # Information text
-    info_text = ft.Text("Creator's Limnetic and Kspep", color=ft.colors.ON_SURFACE_VARIANT)
+    info_text = ft.Text("created by Limnetic and Kspep", color=ft.colors.ON_SURFACE_VARIANT)
 
     # Structure blocks
     page.add(
