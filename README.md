@@ -6,6 +6,11 @@ DiscordRPC-Ui - Graphical interface of the discord RPC management program
 
 **#Project by LyrarmaStudio (limnetic) and CaveSignature (kspep): Limnectic *LyrarmaStudio User* createor RPC code, idea owner and create getway (files -> RPC code) and all main project | (kspep *CaveSignature (discord) owner* (github) - GUI creator, files control GUI, disinger and structure files)**
 
+**Version Structure: V.A.A**
+
+- **V** — global version or release.  
+- **A** — commit or update.
+
 RU:
 Проект находится в разработке, представляет из себя контролер flet GUI для RPC Discord
 позволяет контролировать RPC активность
