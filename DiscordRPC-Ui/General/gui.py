@@ -6,7 +6,7 @@ from main import main_function
 
 # Creating files
 BASE_DIR = "files"
-INFO_FILE = f"{BASE_DIR}/infoList.json"
+INFO_FILE = f"{BASE_DIR}/InfoList.json" #OLd: infoList.json
 print(time.time())
 
 def initialize_files():
