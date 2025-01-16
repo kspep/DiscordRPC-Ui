@@ -4,7 +4,7 @@ DiscordRPC-Ui - Graphical interface of the discord RPC management program
    ![dui](https://github.com/user-attachments/assets/d4edccb9-f5c6-407d-b578-b342606c2c22)
 
 
-**#Project by LyrarmaStudio (limnetic) and CaveSignature (kspep): Limnectic *LyrarmaStudio User* createor RPC code, idea owner and create getway (files -> RPC code) and all main project | (kspep *CaveSignature (discord) owner* (github) - GUI creator, files control GUI, disinger and structure files)**
+**#Project by LyrarmaStudio (limnetic) and CaveSignature (kspep): Limnetic *LyrarmaStudio User* createor RPC code, idea owner and create getway (files -> RPC code) and all main project | (kspep *CaveSignature (discord) owner* (github) - GUI creator, files control GUI, disinger and structure files)**
 
 **Version Structure: V.A.A**
 
