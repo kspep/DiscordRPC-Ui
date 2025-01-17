@@ -6,7 +6,7 @@ from main import main_function
 
 # Creating files
 BASE_DIR = "files"
-INFO_FILE = f"{BASE_DIR}/InfoList.json" #OLd: infoList.json
+INFO_FILE = f"{BASE_DIR}/InfoList.json"  # Old: infoList.json
 print(time.time())
 
 def initialize_files():
@@ -16,14 +16,15 @@ def initialize_files():
             "BotID": "",
             "DataState": "",
             "DataDetails": "",
-            "DataStart": "",
-            "DataEnd": "",
+            "DataTime": "",
             "DataParty_size": "",
             "DataParty_sizeMax": "",
             "ButText": "",
             "ButLink": "",
             "ButText2": "",
-            "ButLink2": ""
+            "ButLink2": "",
+            "Max": False,
+            "Ticking": False
         }
         with open(INFO_FILE, "w") as f:
             json.dump(data, f)
@@ -32,7 +33,7 @@ initialize_files()
 
 # General GUI
 def main(page: ft.Page):
-    page.title = "DiscordRPC-Ui"
+    page.title = "DiscordRPC-Ui"  # This is a DRPC-Ui!
     page.theme_mode = ft.ThemeMode.DARK
     page.window.width = 650
     page.window.height = 550
@@ -53,8 +54,53 @@ def main(page: ft.Page):
     url_input = ft.TextField(label="URL Client ID (REQUIRED ENTRY)", border_color=ft.colors.RED_500, **input_style)
     state_input = ft.TextField(label="State (str)", **input_style)
     details_input = ft.TextField(label="Details (str)", **input_style)
-    start_input = ft.TextField(label="Start Time (int)", width=200, keyboard_type=ft.KeyboardType.NUMBER, border_radius=10)
-    end_input = ft.TextField(label="End Time (int)", width=200, keyboard_type=ft.KeyboardType.NUMBER, border_radius=10)
+    time_value = ft.Text(value="", width=100, visible=False)  # selected time # Yeah, i am mega very sigma (*.*)____)---____
+
+    def show_time_modal(e):
+        time_dialog.open = True
+        page.update()
+
+    def close_time_modal(e):
+        time_dialog.open = False
+        time_value.value = time_input.value
+        page.update()
+
+    def save_modal_settings():
+        data = {
+            "Max": max_toggle.value,
+            "Ticking": ticking_toggle.value
+        }
+        with open(INFO_FILE, "r") as f:
+            existing_data = json.load(f)
+        existing_data.update(data)
+        with open(INFO_FILE, "w") as f:
+            json.dump(existing_data, f, indent=4)
+        page.update()
+
+    time_input = ft.TextField(label="hours:minutes:seconds (str/int)", keyboard_type=ft.KeyboardType.NUMBER, width=400)
+    max_toggle = ft.Switch(label="Max", value=False) # Beep Beep l'm a sheep!!!!!!!!!!!!
+    ticking_toggle = ft.Switch(label="Ticking", value=False) # CS?
+
+    time_dialog = ft.AlertDialog(
+        modal=True,
+        title=ft.Text("Set Time and Parameters"), # (*.*)____)---____
+        content=ft.Column([
+            time_input,
+            max_toggle,
+            ticking_toggle
+        ]),
+        actions=[
+            ft.TextButton("Save", on_click=lambda e: [close_time_modal(e), save_modal_settings()]),
+            ft.TextButton("Del DataTime", on_click=lambda e: close_time_modal(None))
+        ]
+    )
+
+    time_button = ft.ElevatedButton(
+        text="Set Time",
+        on_click=show_time_modal,
+        width=610
+    )
+
     party_size_input = ft.TextField(label="Party Size (int)", width=200, keyboard_type=ft.KeyboardType.NUMBER, border_radius=10)
     party_size_max_input = ft.TextField(label="Party Size Max (int)", width=200, keyboard_type=ft.KeyboardType.NUMBER, border_radius=10)
     but_text_input = ft.TextField(label="Button Text", **input_style)
@@ -74,8 +120,7 @@ def main(page: ft.Page):
             url=url_input.value,
             state=state_input.value,
             details=details_input.value,
-            start=start_input.value,
-            end=end_input.value,
+            time=time_value.value,
             party_size=party_size_input.value,
             party_size_max=party_size_max_input.value,
             but_text=but_text_input.value,
@@ -110,7 +155,7 @@ def main(page: ft.Page):
             ft.Container(
                 content=ft.Column([
                     ft.Row([state_input, details_input], alignment=ft.MainAxisAlignment.SPACE_BETWEEN),
-                    ft.Row([start_input, end_input], alignment=ft.MainAxisAlignment.SPACE_BETWEEN),
+                    ft.Row([time_button, time_value], alignment=ft.MainAxisAlignment.SPACE_BETWEEN),
                     ft.Row([party_size_input, party_size_max_input], alignment=ft.MainAxisAlignment.SPACE_BETWEEN),
                     ft.Row([but_text_input, but_link_input], alignment=ft.MainAxisAlignment.SPACE_BETWEEN),
                     ft.Row([but_text_input2, but_link_input2], alignment=ft.MainAxisAlignment.SPACE_BETWEEN),
@@ -124,15 +169,15 @@ def main(page: ft.Page):
             )
         ])
     )
+    page.dialog = time_dialog
 
 # Save state function
-def save_state(url, state, details, start, end, party_size, party_size_max, but_text, but_link, but_text2, but_link2, page):
+def save_state(url, state, details, time, party_size, party_size_max, but_text, but_link, but_text2, but_link2, page):
     data = {
         "BotID": url,
         "DataState": state,
         "DataDetails": details,
-        "DataStart": start,
-        "DataEnd": end,
+        "DataTime": time,
         "DataParty_size": party_size,
         "DataParty_sizeMax": party_size_max,
         "ButText": but_text,
