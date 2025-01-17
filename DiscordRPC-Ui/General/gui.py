@@ -50,7 +50,7 @@ def main(page: ft.Page):
         "border_radius": 10
     }
 
-    # Input fields
+    # Input field
     url_input = ft.TextField(label="URL Client ID (REQUIRED ENTRY)", border_color=ft.colors.RED_500, **input_style)
     state_input = ft.TextField(label="State (str)", **input_style)
     details_input = ft.TextField(label="Details (str)", **input_style)
@@ -63,19 +63,18 @@ def main(page: ft.Page):
     def close_time_modal(e):
         time_dialog.open = False
         time_value.value = time_input.value
+        save_modal_settings()  # Save changes
         page.update()
 
     def save_modal_settings():
-        data = {
+        with open(INFO_FILE, "r") as f:
+            data = json.load(f)
+        data.update({
             "Max": max_toggle.value,
             "Ticking": ticking_toggle.value
-        }
-        with open(INFO_FILE, "r") as f:
-            existing_data = json.load(f)
-        existing_data.update(data)
+        })
         with open(INFO_FILE, "w") as f:
-            json.dump(existing_data, f, indent=4)
-        page.update()
+            json.dump(data, f, indent=4)
 
     time_input = ft.TextField(label="hours:minutes:seconds (str/int)", keyboard_type=ft.KeyboardType.NUMBER, width=400)
     max_toggle = ft.Switch(label="Max", value=False) # Beep Beep l'm a sheep!!!!!!!!!!!!
@@ -84,14 +83,18 @@ def main(page: ft.Page):
     time_dialog = ft.AlertDialog(
         modal=True,
         title=ft.Text("Set Time and Parameters"), # (*.*)____)---____
-        content=ft.Column([
-            time_input,
-            max_toggle,
-            ticking_toggle
-        ]),
+        content=ft.Container(
+            content=ft.Column([
+                time_input,
+                max_toggle,
+                ticking_toggle
+            ], spacing=10),
+            height=200,
+            padding=10,
+        ),
         actions=[
-            ft.TextButton("Save", on_click=lambda e: [close_time_modal(e), save_modal_settings()]),
-            ft.TextButton("Del DataTime", on_click=lambda e: close_time_modal(None))
+            ft.TextButton("Save & Close", on_click=close_time_modal),
+            ft.TextButton("Cancel", on_click=lambda e: close_time_modal(None))
         ]
     )
 
@@ -109,6 +112,30 @@ def main(page: ft.Page):
     but_link_input2 = ft.TextField(label="Button Link", **input_style)
 
     # Save state button
+    def save_state(url, state, details, time, party_size, party_size_max, but_text, but_link, but_text2, but_link2):
+        with open(INFO_FILE, "r") as f:
+            data = json.load(f)
+        data.update({
+            "BotID": url,
+            "DataState": state,
+            "DataDetails": details,
+            "DataTime": time,
+            "DataParty_size": party_size,
+            "DataParty_sizeMax": party_size_max,
+            "ButText": but_text,
+            "ButLink": but_link,
+            "ButText2": but_text2,
+            "ButLink2": but_link2
+        })
+        with open(INFO_FILE, "w") as f:
+            json.dump(data, f, indent=4)
+
+        # Show SnackBar
+        snack = ft.SnackBar(content=ft.Text("State saved"), shape=ft.RoundedRectangleBorder(radius=0), duration=100)
+        page.overlay.append(snack)
+        snack.open = True
+        page.update()
+
     save_state_button = ft.ElevatedButton(
         text="Save State",
         style=ft.ButtonStyle(
@@ -126,8 +153,7 @@ def main(page: ft.Page):
             but_text=but_text_input.value,
             but_link=but_link_input.value,
             but_text2=but_text_input2.value,
-            but_link2=but_link_input2.value,
-            page=page
+            but_link2=but_link_input2.value
         )
     )
 
@@ -170,29 +196,6 @@ def main(page: ft.Page):
         ])
     )
     page.dialog = time_dialog
-
-# Save state function
-def save_state(url, state, details, time, party_size, party_size_max, but_text, but_link, but_text2, but_link2, page):
-    data = {
-        "BotID": url,
-        "DataState": state,
-        "DataDetails": details,
-        "DataTime": time,
-        "DataParty_size": party_size,
-        "DataParty_sizeMax": party_size_max,
-        "ButText": but_text,
-        "ButLink": but_link,
-        "ButText2": but_text2,
-        "ButLink2": but_link2
-    }
-    with open(INFO_FILE, "w") as f:
-        json.dump(data, f, indent=4)
-
-    # Show SnackBar
-    snack = ft.SnackBar(content=ft.Text("State saved"), shape=ft.RoundedRectangleBorder(radius=0), duration=100)
-    page.overlay.append(snack)
-    snack.open = True
-    page.update()
 
 # Run main script function
 def run_main_script():
