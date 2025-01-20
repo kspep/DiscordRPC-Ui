@@ -1,1 +1,14 @@
-
+{
+  "BotID": "",
+  "DataState": "",
+  "DataDetails": "",
+  "DataTime": "",
+  "DataParty_size": "",
+  "DataParty_sizeMax": "",
+  "ButText": "",
+  "ButLink": "",
+  "ButText2": "",
+  "ButLink2": "",
+  "Max": false,
+  "Ticking": false
+}
