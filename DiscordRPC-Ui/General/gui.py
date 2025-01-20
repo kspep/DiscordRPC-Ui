@@ -11,7 +11,7 @@ print(time.time())
 
 def initialize_files():
     os.makedirs(BASE_DIR, exist_ok=True)
-    if not os.path.exists(INFO_FILE):
+    if not os.path.exists(INFO_FILE) or os.path.getsize(INFO_FILE) == 0:
         data = {
             "BotID": "",
             "DataState": "",
