@@ -70,8 +70,8 @@ def main(page: ft.Page):
         with open(INFO_FILE, "r") as f:
             data = json.load(f)
         data.update({
-            "Max": max_toggle.value,
-            "Ticking": ticking_toggle.value
+            "Max": str(max_toggle.value),
+            "Ticking": str(ticking_toggle.value)
         })
         with open(INFO_FILE, "w") as f:
             json.dump(data, f, indent=4)
@@ -169,7 +169,7 @@ def main(page: ft.Page):
     )
 
     # Information text
-    info_text = ft.Text("created by Limnetic and Kspep", color=ft.colors.ON_SURFACE_VARIANT)
+    info_text = ft.Text("Created by Limnetic and Kspep", color=ft.colors.ON_SURFACE_VARIANT)
 
     # Structure blocks
     page.add(
