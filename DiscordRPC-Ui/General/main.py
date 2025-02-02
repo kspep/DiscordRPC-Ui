@@ -8,8 +8,10 @@ time_of_tick_update = 5
 InfoList = None
 
 def read_from_fields():
+    global timeOnRunMoment
     global InfoList
 
+    timeOnRunMoment = None
     
     with open(f"{BASE_DIR}/InfoList.json", "r") as f:
         InfoList = eval(f.read())
@@ -26,8 +28,26 @@ def take_client_id_from_url(url):
         if slashes_finded == 4:
             client_id = client_id + url[symbol]
     return client_id[1:]
-    
-        
+
+
+timeOnRunMoment = None
+def dataTime_to_seconds(dataTime, ticking, max_):
+    global timeOnRunMoment
+    if timeOnRunMoment == None: timeOnRunMoment = time.time()
+    dataTimeMas = '['
+    for i in range(len(dataTime)):
+        if dataTime[i] != ':': dataTimeMas += dataTime[i]
+        else: dataTimeMas += ','
+    dataTimeMas += ']'
+    dataTimeMas = eval(dataTimeMas)
+    time_in_sec = dataTimeMas[0]*3600 + dataTimeMas[1]*60 + dataTimeMas[2]
+    if not eval(max_) and not eval(ticking):
+        return [1, time_in_sec+1]
+    elif eval(max_) and not eval(ticking):
+        return [1, timeOnRunMoment]
+    elif eval(max_) and eval(ticking):
+        return [1, 9999999999]
+    return [timeOnRunMoment-time_in_sec, 9999999999]
 def main_function():
     global client_id
     read_from_fields()
@@ -36,6 +56,7 @@ def main_function():
     RPC = Presence(client_id, pipe=0) 
     RPC.connect()
 
+    
     while True:
         
         buttons_pack = []
@@ -47,9 +68,9 @@ def main_function():
 
         state_pack = (InfoList['DataState'] if InfoList['DataState'] != '' else '  ')
         details_pack = (InfoList['DataDetails'] if InfoList['DataDetails'] != '' else '  ')
-        start_pack = (int(InfoList['DataStart']) if InfoList['DataStart'] != '' else None)
-        end_pack = (int(InfoList['DataEnd']) if InfoList['DataEnd'] != '' else None)
-        
+        print(dataTime_to_seconds(InfoList['DataTime'], InfoList['Ticking'], InfoList['Max']))
+        start_pack, end_pack = dataTime_to_seconds(InfoList['DataTime'], InfoList['Ticking'], InfoList['Max'])
+  #      print(dataTime_to_seconds(InfoList['DataTime'], InfoList['Ticking'], InfoList['Max']))
         RPC.update(details=details_pack,
                    state=state_pack,
                    buttons=buttons_pack,
@@ -57,5 +78,3 @@ def main_function():
                    start=start_pack ,
                    end=end_pack)
         time.sleep(time_of_tick_update)
-
-    
