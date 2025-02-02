@@ -3,8 +3,8 @@ DiscordRPC-Ui - Graphical interface of the discord RPC management program
 
    ![dui](https://github.com/user-attachments/assets/d4edccb9-f5c6-407d-b578-b342606c2c22)
 
-
-**#Project by LyrarmaStudio (limnetic) and CaveSignature (kspep): Limnetic *LyrarmaStudio User* createor RPC code, idea owner and create getway (files -> RPC code) and all main project | (kspep *CaveSignature (discord) owner* (github) - GUI creator, files control GUI, disinger and structure files)**
+kspep & limnetic
+**#Project by limnetic and kspep: Limnetic createor RPC code, idea owner and create getway (files -> RPC code) and all main project | (kspep (github) - GUI creator, files control GUI, disinger and structure files)**
 
 **Version Structure: V.A.A**
 
@@ -68,12 +68,12 @@ RU:
 
 ---
 
-# Инструкция по установке:  
+# Инструкция по установке из исходника:  
 **Windows 10/11**:  
 1. Установите Python 3.12 и pip из официальных репозиториев или Microsoft Store.  
 2. Затем установите либо ZIP-архив (рекомендуется), либо используйте git (стороннее ПО GitHub).  
 
-3. Распакуйте архив (если использовался архив) и зайдите в папку **DiscordRPC-Ui** в такой же папке **DiscordRPC-Ui**.  
+3. Распакуйте архив (если использовался архив) или скачайте с помощью ```git clone``` и зайдите в папку **DiscordRPC-Ui** в такой же папке **DiscordRPC-Ui**.  
 4. Затем перейдите в папку **general** и откройте терминал в этой папке.  
 
 5. Введите команду:  
